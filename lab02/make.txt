@@ -1,0 +1,12 @@
+1. "clean" will delets all the compiled programs.
+2. ".c.o" is an old-fashioned suffix rule. better way to do this is: %.o : %.c.
+This means make any files stem.o from another file stem.c.
+
+"all"->"BINARIES"->"VECTOR_PROG" etc.
+
+I personally think that some rules is still lacking, cause vector_prog is defined but never used.
+3. The compiler we use is gcc.
+4. we are using std=c99.
+5. by using $(FOO) to fetch what it represents.
+6. Darwin might suitable for Mac users to compile the program.
+7. line starts with $(LFSR_PROG).
