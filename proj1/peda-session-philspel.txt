@@ -1,0 +1,3 @@
+break /home/link/Desktop/proj/su20-proj1-starter/philspel.c:53
+break /home/link/Desktop/proj/su20-proj1-starter/philspel.c:168
+
