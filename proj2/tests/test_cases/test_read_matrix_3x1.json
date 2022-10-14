@@ -1,0 +1,8 @@
+{
+    "name": "Basic Read Matrix Test",
+    "id": "read_matrix",
+    "test_file": "test_read_matrix_3x1.s",
+    "args": ["-it", "-ms", "-1"],
+    "stdout": "4 \n5 \n6 \n",
+    "exitcode": 0
+}

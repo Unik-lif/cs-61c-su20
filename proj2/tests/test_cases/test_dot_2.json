@@ -1,0 +1,8 @@
+{
+    "name": "Basic Dot Test",
+    "id": "dot",
+    "test_file": "test_dot_2.s",
+    "args": ["-it", "-ms", "-1"],
+    "stdout": "30\n",
+    "exitcode": 0
+}

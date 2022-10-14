@@ -1,0 +1,130 @@
+    # =====================================
+    # LOAD MATRICES
+    # =====================================
+
+
+
+    # Load pretrained m0
+    # --------------- s3 for load address, s4 for the matrix. ----------------
+    lw s3, 0(s1)
+    mv a0, s3
+    la a1, m0_row
+    la a2, m0_col
+    jal ra, read_matrix
+
+    mv s4, a0
+    # handy usage, to compute the matmul afterwards.
+    la s7, m0_row
+    lw s7, 0(s7)
+    la s8, m0_col
+    lw s8, 0(s8)
+
+    # Load pretrained m1
+    # --------------- s3 for load address, s5 for the matrix. ----------------
+    lw s3, 4(s1)
+    mv a0, s3
+    la a1, m1_row
+    la a2, m1_col
+    jal ra, read_matrix
+
+    mv s5, a0
+
+    la s9, m1_row
+    lw s9, 0(s9)
+    la s10, m1_col
+    lw s10, 0(s10)
+
+    # Load input matrix
+    # --------------- s3 for load address, s6 for the matrix. ----------------
+    lw s3, 8(s1)
+    mv a0, s3
+    la a1, in_row
+    la a2, in_col
+    jal ra, read_matrix
+
+    mv s6, a0
+
+    la s11, in_row
+    lw s11, 0(s11)
+    la s0, in_col
+    lw s0, 0(s0)
+
+    
+    # =====================================
+    # RUN LAYERS
+    # =====================================
+    # 1. LINEAR LAYER:    m0 * input
+    # 2. NONLINEAR LAYER: ReLU(m0 * input)
+    # 3. LINEAR LAYER:    m1 * ReLU(m0 * input)
+    
+    # first: matmul
+    # col of m0, row of input.
+    mul a0, s8, s11
+    slli a0, a0, 2    
+    jal ra, malloc
+    
+    mv a6, a0 
+
+    mv a0, s4
+    mv a1, s7
+    mv a2, s8
+
+    mv a3, s6
+    mv a4, s11
+    mv a5, s0
+
+    jal ra, matmul
+
+    # second: relu
+    # a0 is already what we want. 
+    mul a1, s8, s11
+    jal ra, relu
+
+    # third: matmul
+    # col of m1.
+    mv a3, a0
+
+    mul a0, s10, s8
+    slli a0, a0, 2    
+    jal ra, malloc
+
+    mv a6, a0
+
+    mv a0, s5
+    mv a1, s9
+    mv a2, s10    
+
+    mv a4, s8
+    mv a5, s0
+
+    jal ra, matmul
+
+    # =====================================
+    # WRITE OUTPUT
+    # =====================================
+    # Write output matrix
+    # s10, s8, s2 are still needed, a0 is used as the matmul matrix.
+    # others can easily used.
+    mv s3, a0
+    mv a1, s3
+    lw a0, 12(s1)
+    mv a2, s10
+    mv a3, s8
+
+    jal ra, write_matrix
+    # =====================================
+    # CALCULATE CLASSIFICATION/LABEL
+    # =====================================
+    # Call argmax
+    mv a0, s3
+    mul a1, s8, s10
+    jal ra, argmax
+
+    # Print classification
+    mv a1, a0
+    jal print_int
+
+
+    # Print newline afterwards for clarity
+    li a1, '\n'
+    jal print_str

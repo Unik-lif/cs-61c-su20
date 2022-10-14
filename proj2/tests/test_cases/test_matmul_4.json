@@ -1,0 +1,8 @@
+{
+    "name": "Basic Matmul Test",
+    "id": "matmul",
+    "test_file": "test_matmul_4.s",
+    "args": ["-it", "-ms", "-1"],
+    "stdout": "12 15 18 \n",
+    "exitcode": 0
+}
