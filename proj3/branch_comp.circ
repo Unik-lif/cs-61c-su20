@@ -211,7 +211,7 @@ end TCL_Generic;
       <a name="label" val="rs1"/>
       <a name="width" val="32"/>
     </comp>
-    <comp lib="0" loc="(340,430)" name="Tunnel">
+    <comp lib="0" loc="(340,470)" name="Tunnel">
       <a name="facing" val="east"/>
       <a name="label" val="rs2"/>
       <a name="width" val="32"/>
@@ -275,13 +275,14 @@ end TCL_Generic;
     <wire from="(220,270)" to="(220,290)"/>
     <wire from="(220,330)" to="(220,340)"/>
     <wire from="(340,330)" to="(400,330)"/>
-    <wire from="(340,430)" to="(430,430)"/>
-    <wire from="(400,330)" to="(400,450)"/>
+    <wire from="(340,470)" to="(430,470)"/>
+    <wire from="(400,330)" to="(400,430)"/>
     <wire from="(400,330)" to="(510,330)"/>
-    <wire from="(400,450)" to="(510,450)"/>
-    <wire from="(430,350)" to="(430,430)"/>
+    <wire from="(400,430)" to="(510,430)"/>
+    <wire from="(430,350)" to="(430,450)"/>
     <wire from="(430,350)" to="(510,350)"/>
-    <wire from="(430,430)" to="(510,430)"/>
+    <wire from="(430,450)" to="(430,470)"/>
+    <wire from="(430,450)" to="(510,450)"/>
     <wire from="(550,340)" to="(640,340)"/>
     <wire from="(550,350)" to="(620,350)"/>
     <wire from="(550,440)" to="(590,440)"/>
