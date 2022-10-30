@@ -1,0 +1,85 @@
+Exercise 1
+	Scenario 1
+		1. never hit. As for stride is 32 bytes, which will replace the first cache block over and over again.
+		2. 0.
+		3. change the step size to 1. the hit rate will close to 50%.
+
+	Scenario 2
+		1. 2
+		2. 3. the first access is always miss(See TIO). the other 3 will hit.
+		3. the step is 2, but the cache size is 16, so basically a cache block can be used twice in a loop, and four times for accessing as a whole. What's more, the first access will cause cache miss.
+		4. it will close to 1, because the cache is filled and always hit without eviction.
+		5. Blocklization the array into different parts. In each parts we adapt all of the functions and get the results.
+
+	Scenario 3
+		1. 0.5, 0, the overrall hit rate is 0.5.
+		2. 32 times, 16 times are missed.
+		3. 16 times. When L1 cache has missed, we transfer our focus on L2 cache.
+		4. we can double the blocksize of the L2 cache. Therefore, L2 can have some hits. Not to break the conventions, we can / 2 the index of L2 cache.
+		5. the number of blocks won't cause a change, whereas the L1 block size counts a lot.
+
+Exercise 2
+
+ijk:	n = 1000, 1.861 Gflop/s
+ikj:	n = 1000, 0.114 Gflop/s
+jik:	n = 1000, 1.978 Gflop/s
+jki:	n = 1000, 13.383 Gflop/s
+kij:	n = 1000, 0.115 Gflop/s
+kji:	n = 1000, 9.507 Gflop/s
+
+	1. jki is the best. Because the calculation we used here is: `C[i+j*n] += A[i+k*n] * B[k+j*n];`, jki loop has the best locality since it is the change of k and i that are more local.
+	2. ikj is the worst. The reason is the same with q1.
+	3. better locality. 说白了就是紧接下来计算的几个项和i，k局部的变化最相关，地址很接近，那么自然其局部性特别好。
+
+Exercise 3
+	Part 1
+		blocksize = 20, n = 100: 
+		blocksize = 20, n = 1000: 
+		blocksize = 20, n = 2000: 
+		blocksize = 20, n = 5000: 
+		blocksize = 20, n = 10000: 
+
+link@ubuntu:~/Desktop/su20-lab-starter/lab07$ ./transpose 100 20
+Testing naive transpose: 0.01 milliseconds
+Testing transpose with blocking: 0.012 milliseconds
+link@ubuntu:~/Desktop/su20-lab-starter/lab07$ ./transpose 1000 20
+Testing naive transpose: 0.988 milliseconds
+Testing transpose with blocking: 0.943 milliseconds
+link@ubuntu:~/Desktop/su20-lab-starter/lab07$ ./transpose 2000 20
+Testing naive transpose: 26.505 milliseconds
+Testing transpose with blocking: 4.202 milliseconds
+link@ubuntu:~/Desktop/su20-lab-starter/lab07$ ./transpose 5000 20
+Testing naive transpose: 280.237 milliseconds
+Testing transpose with blocking: 31.955 milliseconds
+link@ubuntu:~/Desktop/su20-lab-starter/lab07$ ./transpose 10000 20
+Testing naive transpose: 1375.15 milliseconds
+Testing transpose with blocking: 174.9 milliseconds
+
+		1.
+		2. the benefit is much more outstanding when the blocksize is big enough.
+
+	Part 2
+		blocksize = 50, n = 10000:
+		blocksize = 100, n = 10000:
+		blocksize = 500, n = 10000:
+		blocksize = 1000, n = 10000:
+		blocksize = 5000, n = 10000:
+
+		1.
+	
+link@ubuntu:~/Desktop/su20-lab-starter/lab07$ ./transpose 10000 50
+Testing naive transpose: 1369.07 milliseconds
+Testing transpose with blocking: 137.607 milliseconds
+link@ubuntu:~/Desktop/su20-lab-starter/lab07$ ./transpose 10000 100
+Testing naive transpose: 1373.65 milliseconds
+Testing transpose with blocking: 118.994 milliseconds
+link@ubuntu:~/Desktop/su20-lab-starter/lab07$ ./transpose 10000 500
+Testing naive transpose: 1380.84 milliseconds
+Testing transpose with blocking: 119.685 milliseconds
+link@ubuntu:~/Desktop/su20-lab-starter/lab07$ ./transpose 10000 1000
+Testing naive transpose: 1398.29 milliseconds
+Testing transpose with blocking: 208.934 milliseconds
+link@ubuntu:~/Desktop/su20-lab-starter/lab07$ ./transpose 10000 5000
+Testing naive transpose: 1401.6 milliseconds
+Testing transpose with blocking: 1402.3 milliseconds
+
